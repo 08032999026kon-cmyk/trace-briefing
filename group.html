@@ -1,0 +1,34 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>TRACE｜運営用 QRシート</title>
+<style>
+:root{--ink:#172638;--muted:#5d604f;--line:#d6cfbd;--paper:#fffdf7;--bg:#f1ede2;--red:#a3241c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;line-height:1.7}
+main{max-width:980px;margin:0 auto;padding:20px 16px 48px}h1{font-size:22px;margin:0 0 4px}.lead{color:var(--muted);font-size:14px;margin:0 0 16px}
+.setup{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:14px;display:grid;gap:12px;margin-bottom:16px}
+label{display:grid;gap:4px;font-size:13px;font-weight:700}input,select{font:inherit;font-size:15px;padding:9px 10px;border:1px solid #bfb7a2;border-radius:6px;background:#fff;width:100%}
+.warn{color:var(--red);font-size:13px;margin:0}.warn:empty{display:none}
+.actions{display:flex;gap:8px;flex-wrap:wrap}button{font:inherit;font-size:14px;min-height:44px;padding:8px 16px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+.sheet{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{background:#fff;border:2px solid var(--ink);border-radius:10px;padding:18px;text-align:center;break-inside:avoid}
+.card.leader{border-color:var(--red)}.card h2{margin:0;font-size:22px}.card .role{display:inline-block;font-size:13px;font-weight:700;color:#fff;background:var(--ink);border-radius:999px;padding:2px 12px;margin-bottom:6px}.card.leader .role{background:var(--red)}
+.card p{font-size:13px;margin:6px 0;color:#333}.qr{width:220px;height:220px;margin:10px auto}.qr svg{width:100%;height:100%}.url{font-family:ui-monospace,Menlo,monospace;font-size:11px;word-break:break-all;color:var(--muted)}
+.steps{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:13px}.steps ol{margin:4px 0 0;padding-left:20px}
+@media(max-width:700px){.sheet{grid-template-columns:1fr}}
+@media print{body{background:#fff}.setup,.no-print{display:none}main{padding:0}.card{border-width:2px}}
+</style><script defer src="vendor/qrcode.js"></script></head><body><main>
+<h1>グループ体験 QRシート（運営用）</h1><p class="lead">グループごとに印刷して机に置きます。代表用は1グループに1枚、メンバー用は全員が読み取ります。</p>
+<section class="setup" aria-label="設定"><label>公開URL（index.html と member.html を置いたフォルダーのURL）<input id="base" placeholder="https://example.com/trace/" inputmode="url"></label>
+<label>体験する事件<select id="case"><option value="e1">CASE 01 黒金社長の売上隠し（帳票32ページ）</option><option value="case02">CASE 02 銭守社長の外注費偽装（帳票14ページ）</option><option value="case03">CASE 03 豪田社長のニセ出張（帳票14ページ）</option></select></label>
+<label>グループ名（任意・シートに表示するだけ）<input id="group" placeholder="例：A班"></label>
+<p class="warn" id="warn"></p><div class="actions"><button id="print">印刷する</button></div></section>
+<section class="sheet" aria-label="QRコード"><div class="card leader"><span class="role">代表用</span><h2 id="g1"></h2><div class="qr" id="qr-leader"></div><p><b>社長に証拠を示せるのは、このQRで開いたスマホだけです。</b></p><p id="leader-case"></p><p class="url" id="url-leader"></p></div>
+<div class="card"><span class="role">メンバー用</span><h2 id="g2"></h2><div class="qr" id="qr-member"></div><p><b>資料を自由に見られます（提示はできません）。</b></p><p>気になるページは、資料名とページ番号を代表に伝えて相談しましょう。</p><p class="url" id="url-member"></p></div></section>
+<section class="steps no-print"><b>当日の流れ</b><ol><li>グループで代表を1人決め、代表は「代表用」、ほかの人は「メンバー用」を読み取る。</li><li>代表は事件一覧から上と同じ事件を選び、プロローグを進める。</li><li>社長の主張が出たら、メンバーは画面の「主張1〜3」を代表と同じ番号に合わせる。</li><li>全員で帳票を読み、相談して、代表が1ページを社長に示す。</li></ol></section>
+</main><script>
+document.addEventListener('DOMContentLoaded',()=>{const $=s=>document.querySelector(s);const names={e1:'CASE 01 黒金社長の売上隠し',case02:'CASE 02 銭守社長の外注費偽装',case03:'CASE 03 豪田社長のニセ出張'};
+const here=/^https?:$/.test(location.protocol)?location.href.replace(/[^/]*([?#].*)?$/,''):'';$('#base').value=here;
+function qr(el,text){el.innerHTML='';if(typeof qrcode!=='function'){el.textContent='QRを作れませんでした';return}const q=qrcode(0,'M');q.addData(text);q.make();el.innerHTML=q.createSvgTag({cellSize:4,margin:2,scalable:true})}
+function draw(){let base=$('#base').value.trim();if(base&&!base.endsWith('/'))base+='/';const c=$('#case').value,g=$('#group').value.trim();
+$('#warn').textContent=window.TRACE_LINKS?'':!base?'公開URLを入力してください。参加者のスマホから開けるhttps://のURLが必要です。':(!/^https:\/\//.test(base)?'https:// で始まるURLをおすすめします。スマホから開けるか事前に確認してください。':'');
+const L=window.TRACE_LINKS,leader=L?L.leader:base+'index.html',member=L?L.member+'#'+c:base+'member.html?case='+encodeURIComponent(c);$('#g1').textContent=g||'代表';$('#g2').textContent=g||'メンバー';$('#leader-case').textContent='開いたら「'+names[c]+'」を選んで始めます。';
+$('#url-leader').textContent=leader;$('#url-member').textContent=member;qr($('#qr-leader'),leader);qr($('#qr-member'),member)}
+['base','case','group'].forEach(id=>$('#'+id).addEventListener('input',draw));$('#print').onclick=()=>window.print();draw()});
+</script></body></html>

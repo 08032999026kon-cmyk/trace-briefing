@@ -1,0 +1,205 @@
+/* Keep the player's role, setting and immediate task visible during the opening. */
+.investigation-brief{
+  margin:14px 0 22px;
+  padding:15px 20px;
+  border:1px solid #cfc4ac;
+  border-left:4px solid #a88546;
+  border-radius:9px;
+  background:#fffdf7;
+  box-shadow:0 3px 12px #553f1d06;
+  min-width:0;
+}
+.brief-identity{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.brief-role-icon{
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:40px;
+  flex-shrink:0;
+  border:1px solid #c9b784;
+  border-radius:7px;
+  background:#f4e9cd;
+  color:#806332;
+}
+.brief-role-icon svg{width:23px;height:25px}
+.brief-identity>div{min-width:0}
+.brief-identity small{
+  display:block;
+  color:#725e3e;
+  font-size:10px;
+  line-height:1.6;
+}
+.brief-identity strong{
+  display:block;
+  color:#172638;
+  font-size:16px;
+  line-height:1.7;
+  font-weight:750;
+}
+.brief-stage{
+  margin-left:auto;
+  padding:5px 10px;
+  border:1px solid #d5c7ab;
+  border-radius:5px;
+  background:#f6f0e3;
+  color:#6a593c;
+  font-size:10px;
+  font-weight:600;
+  line-height:1.7;
+}
+.brief-context{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);
+  gap:10px 24px;
+  margin:12px 0 0;
+  padding-top:11px;
+  border-top:1px solid #e3dac8;
+}
+.brief-context>div{
+  display:grid;
+  grid-template-columns:85px minmax(0,1fr);
+  gap:9px;
+  align-items:baseline;
+  min-width:0;
+}
+.brief-context dt,.brief-summary dt{
+  color:#796344;
+  font-size:10px;
+  font-weight:650;
+  line-height:1.9;
+}
+.brief-context dd{
+  margin:0;
+  color:#344337;
+  font-size:12px;
+  font-weight:550;
+  line-height:1.85;
+  overflow-wrap:anywhere;
+}
+.brief-recall{
+  margin:0 0 17px;
+  border:1px solid #d2c6ae;
+  border-radius:8px;
+  background:#fffdf7;
+  overflow:hidden;
+}
+.brief-recall>summary{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-height:50px;
+  padding:10px 17px;
+  list-style:none;
+  cursor:pointer;
+}
+.brief-recall>summary::-webkit-details-marker{display:none}
+.brief-recall>summary:hover{background:#f4ecdb}
+.brief-recall>summary:focus-visible{outline-offset:-3px}
+.brief-recall-role{
+  padding:3px 9px;
+  border:1px solid #d8c9a7;
+  border-radius:4px;
+  background:#f5ecd8;
+  color:#6c552e;
+  font-size:10px;
+  font-weight:600;
+  line-height:1.8;
+}
+.brief-recall>summary strong{
+  flex:1;
+  font-size:12px;
+  font-weight:650;
+  line-height:1.85;
+}
+.brief-recall>summary i{
+  font-style:normal;
+  color:#7d6a46;
+  font-size:18px;
+  line-height:1;
+}
+.brief-recall[open]>summary{
+  border-bottom:1px solid #e2d6c0;
+  background:#f5eedf;
+}
+.brief-recall[open]>summary i{transform:rotate(180deg)}
+.brief-summary{margin:0;padding:15px 19px 18px}
+.brief-summary>div{
+  display:grid;
+  grid-template-columns:112px minmax(0,1fr);
+  gap:15px;
+  padding:7px 0;
+  min-width:0;
+}
+.brief-summary>div+div{border-top:1px solid #e9e0d0}
+.brief-summary dd{
+  margin:0;
+  color:#42503f;
+  font-size:12px;
+  line-height:1.95;
+  overflow-wrap:anywhere;
+}
+.brief-focus,.prologue-copy .brief-mission{
+  margin-top:18px;
+  padding:12px 15px;
+  border-left:3px solid #b18a48;
+  border-radius:0 6px 6px 0;
+  background:#f5ecd9;
+}
+.brief-focus>span,.brief-mission>span{
+  display:block;
+  font-size:10px;
+  line-height:1.8;
+  color:#7e6136;
+}
+.brief-focus>strong,.brief-mission>strong{
+  display:block;
+  margin-top:4px;
+  color:#344337;
+  font-size:13px;
+  line-height:1.9;
+}
+@media(max-width:900px){
+  .brief-context{gap:9px 18px;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .brief-context>div{display:block}
+  .brief-context dd{margin-top:2px}
+}
+@media(max-width:760px){
+  .investigation-brief{margin:12px 0 18px;padding:12px 13px;border-left-width:3px;border-radius:7px}
+  .brief-identity{gap:9px;flex-wrap:wrap}
+  .brief-role-icon{width:31px;height:35px;border-radius:5px}
+  .brief-role-icon svg{width:20px;height:22px}
+  .brief-identity small{font-size:9px;line-height:1.5}
+  .brief-identity strong{font-size:14px;line-height:1.7}
+  .brief-stage{font-size:9px;padding:4px 7px;max-width:100%}
+  .brief-context{grid-template-columns:1fr;gap:7px;margin-top:10px;padding-top:9px}
+  .brief-context>div{display:grid;grid-template-columns:77px minmax(0,1fr);gap:7px}
+  .brief-context dt{font-size:9px}
+  .brief-context dd{font-size:11px;line-height:1.8;margin:0}
+  .brief-recall{margin-bottom:14px;border-radius:7px}
+  .brief-recall>summary{gap:9px;min-height:48px;padding:10px 12px;flex-wrap:wrap}
+  .brief-recall-role{font-size:9px;padding:3px 7px}
+  .brief-recall>summary strong{font-size:11px;min-width:110px}
+  .brief-summary{padding:10px 13px 12px}
+  .brief-summary>div{grid-template-columns:1fr;gap:3px;padding:8px 0}
+  .brief-summary dt{font-size:10px}
+  .brief-summary dd{font-size:11px;line-height:1.95}
+  .brief-focus,.prologue-copy .brief-mission{margin-top:14px;padding:10px 12px}
+  .brief-focus>span,.brief-mission>span{font-size:9px}
+  .brief-focus>strong,.brief-mission>strong{font-size:12px}
+}
+@media(max-width:370px){
+  .brief-identity strong{font-size:13px}
+  .brief-stage{font-size:9px;padding:4px 6px}
+  .brief-context>div{grid-template-columns:71px minmax(0,1fr)}
+  .brief-recall>summary{gap:7px}
+  .brief-recall-role{font-size:9px}
+}
+@media print{
+  .investigation-brief,.brief-recall{box-shadow:none;break-inside:avoid}
+  .brief-recall>summary i{display:none}
+}

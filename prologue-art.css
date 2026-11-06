@@ -1,0 +1,27 @@
+/* Decorative story cuts; controls and story copy belong to the application. */
+.prologue-art{width:100%;height:300px;min-width:0;overflow:hidden;background:#172638;border-radius:12px;isolation:isolate}.prologue-art svg{display:block;width:100%;height:100%;overflow:visible}.prologue-art [class^="pa-"]{transform-box:fill-box;transform-origin:center}.prologue-art .pa-plane{transform-origin:70% 50%}.prologue-art .pa-magnifier{transform-origin:35% 35%}
+@keyframes pa-office-paper{0%,16%,100%{translate:0 0;rotate:0deg}42%,68%{translate:36px -9px;rotate:4deg}84%{translate:7px 1px;rotate:0deg}}
+@keyframes pa-office-envelope{0%,12%,100%{translate:0 0}40%,65%{translate:-31px 1px}84%{translate:-8px 0}}
+@keyframes pa-office-breathe{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@keyframes pa-office-blink{0%,41%,46%,100%{scale:1 1}43.5%{scale:1 .1}}
+@keyframes pa-ledger-motion{0%,100%{translate:0 0;rotate:0deg}26%{translate:6px -11px;rotate:1deg}54%,75%{translate:1px -1px;rotate:-1deg}}
+@keyframes pa-stamp-motion{0%,20%,100%{translate:0 -12px;rotate:-8deg}40%,47%{translate:-72px 94px;rotate:-8deg}63%,80%{translate:0 -12px;rotate:-8deg}}
+@keyframes pa-mark-motion{0%,37%{opacity:0;scale:1.2}43%,75%{opacity:.95;scale:1}94%,100%{opacity:0;scale:1}}
+@keyframes pa-pen-motion{0%,100%{translate:0 0;rotate:0deg}40%,65%{translate:8px -10px;rotate:7deg}}
+@keyframes pa-trail-motion{0%,100%{opacity:.25;translate:-6px 0}50%{opacity:.9;translate:8px 0}}
+@keyframes pa-money-back{0%,100%{translate:0 0;rotate:0deg}35%,58%{translate:-9px -28px;rotate:-5deg}80%{translate:0 -8px;rotate:0deg}}
+@keyframes pa-money-front{0%,100%{translate:0 0;rotate:0deg}35%,58%{translate:12px -39px;rotate:5deg}80%{translate:1px -9px;rotate:0deg}}
+@keyframes pa-envelope-motion{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 4px;rotate:-1deg}}
+@keyframes pa-receipt-motion{0%,100%{translate:0 0;rotate:0deg}50%{translate:10px -9px;rotate:4deg}}
+@keyframes pa-coin-motion{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes pa-magnifier-motion{0%,100%{translate:-21px 2px;rotate:-5deg}34%{translate:-43px -31px;rotate:3deg}67%{translate:13px 16px;rotate:5deg}}
+@keyframes pa-invoice-motion{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes pa-tick-motion{0%,30%,100%{opacity:.35;scale:.9}52%,74%{opacity:1;scale:1.04}}
+@keyframes pa-plane-motion{0%,100%{translate:-23px 8px;rotate:-5deg}45%,60%{translate:44px -22px;rotate:5deg}}
+@keyframes pa-flight-motion{0%,100%{stroke-dashoffset:0;opacity:.35}50%{stroke-dashoffset:-26;opacity:.7}}
+@keyframes pa-ticket-motion{0%,100%{translate:0 0;rotate:0deg}50%{translate:11px -12px;rotate:3deg}}
+@keyframes pa-suitcase-motion{0%,100%{translate:0 0;rotate:0deg}50%{translate:-5px -3px;rotate:-2deg}}
+html[data-motion="on"] .prologue-art .pa-office-file{animation:pa-office-paper 4.6s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-office-envelope{animation:pa-office-envelope 4.6s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-boss{animation:pa-office-breathe 3.8s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-boss-eyes{animation:pa-office-blink 4.4s linear infinite}html[data-motion="on"] .prologue-art .pa-ledger-sheet{animation:pa-ledger-motion 4.8s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-stamp{animation:pa-stamp-motion 4.8s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-cancel-mark{animation:pa-mark-motion 4.8s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-pen{animation:pa-pen-motion 4.8s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-paper-trail,html[data-motion="on"] .prologue-art .pa-money-trail{animation:pa-trail-motion 3s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-money-back{animation:pa-money-back 4s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-money-front{animation:pa-money-front 4s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-envelope{animation:pa-envelope-motion 4s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-money-receipt{animation:pa-receipt-motion 4.5s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-coin{animation:pa-coin-motion 3s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-magnifier{animation:pa-magnifier-motion 5.2s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-invoice-sheet{animation:pa-invoice-motion 4s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-invoice-tick{animation:pa-tick-motion 5.2s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-plane{animation:pa-plane-motion 4.8s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-flight-trail{animation:pa-flight-motion 4.8s linear infinite}html[data-motion="on"] .prologue-art .pa-ticket{animation:pa-ticket-motion 4.8s ease-in-out infinite}html[data-motion="on"] .prologue-art .pa-suitcase{animation:pa-suitcase-motion 4.8s ease-in-out infinite}
+html[data-motion="off"] .prologue-art *,html[data-motion="off"] .prologue-art *::before,html[data-motion="off"] .prologue-art *::after{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){html:not([data-motion-preference="on"]) .prologue-art *,html:not([data-motion-preference="on"]) .prologue-art *::before,html:not([data-motion-preference="on"]) .prologue-art *::after{animation:none!important;transition:none!important}}
+@media(max-width:760px){.prologue-art{height:210px;border-radius:9px}}@media(max-width:360px){.prologue-art{height:190px}}
