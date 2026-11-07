@@ -15,8 +15,7 @@ p,li,td,th{font-size:clamp(16px,1.9vw,30px)}
 .title-slide .kicker{color:#d7c9a3}.title-slide .lead{color:#d9dee6}
 .logo{display:inline-flex;align-items:center;justify-content:center;width:clamp(56px,6vw,96px);height:clamp(56px,6vw,96px);border:3px solid #fff;border-radius:12px;font-size:clamp(32px,4vw,64px);font-weight:800;margin-bottom:3vh}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:3vw;min-height:0}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2vw;min-height:0}
-.work-note{font-size:clamp(18px,2.2vw,34px);margin:2vh 0 0}.work-note:empty{display:none}
+.note{color:var(--muted);margin-top:3vh}
 .steps li.must{color:var(--red)}.steps li.must::before{background:var(--red)}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:2.5vh 2vw}
 .card.red{border:3px solid var(--red)}.card.navy{border:3px solid var(--ink)}
@@ -24,11 +23,8 @@ p,li,td,th{font-size:clamp(16px,1.9vw,30px)}
 .badge{display:inline-block;color:#fff;background:var(--ink);border-radius:999px;padding:.1em .8em;font-weight:700;font-size:clamp(14px,1.5vw,22px)}
 .badge.red{background:var(--red)}
 ul.big{margin:0;padding-left:1.2em}ul.big li{margin:.6vh 0}
-table.flow{border-collapse:collapse;width:100%}table.flow td{padding:1.1vh 1vw;border-bottom:1px solid var(--line)}table.flow td:first-child{width:9em;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.flow tr.now td{background:#fff3cf;font-weight:700}
-.qrs{display:grid;grid-template-columns:1.4fr 1fr;gap:3vw;align-items:center;flex:1;min-height:0}
-.qrbox{text-align:center}.qrbox .qr{width:min(50vh,34vw);height:min(50vh,34vw);margin:1vh auto;background:#fff;padding:1vh;border-radius:8px}
-.qrbox.small .qr{width:min(26vh,20vw);height:min(26vh,20vw)}
+.qrs{display:grid;grid-template-columns:1fr 1fr;gap:3vw;align-items:center;flex:1;min-height:0}
+.qrbox{text-align:center}.qrbox .qr{width:min(48vh,32vw);height:min(48vh,32vw);margin:1vh auto;background:#fff;padding:1vh;border-radius:8px}
 .qr svg{width:100%;height:100%;display:block}.url{font-family:ui-monospace,Menlo,monospace;font-size:clamp(11px,1.1vw,16px);color:var(--muted);word-break:break-all}
 .timer-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:3vw;flex:1;min-height:0;align-items:center}
 .timer{font-size:clamp(80px,15vw,240px);font-weight:800;font-variant-numeric:tabular-nums;text-align:center;line-height:1}
@@ -58,68 +54,53 @@ dialog .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 <script defer src="forms.js"></script><script defer src="page-data.js"></script><script defer src="episodes-data.js"></script><script defer src="story.js"></script><script defer src="vendor/qrcode.js"></script>
 </head><body>
 <div class="deck">
-<section class="slide title-slide" data-title="タイトル"><div class="logo">T</div><p class="kicker" data-cfg="org"></p><h1>税務調査体験<br>TRACE</h1><p class="lead">社長の説明の<b>おかしな点</b>を手がかりに、どの帳票を見るべきか当たりをつけ、<b>不正を立証する決め手の1ページ</b>を<b style="color:var(--red)">社長にぶつける</b>。<br>グループで相談しながら進める体験です（調査タイム約<span data-cfg="playMin"></span>分）。</p></section>
+<section class="slide title-slide" data-title="タイトル"><div class="logo">T</div><p class="kicker" data-cfg="org"></p><h1>税務調査体験<br>TRACE</h1><p class="lead">社長の説明の<b>おかしな点</b>を手がかりに帳票の当たりをつけ、<br>不正を立証する<b style="color:var(--red)">決め手の1ページ</b>を社長にぶつける。</p></section>
 
-<section class="slide" data-title="今日の流れ"><p class="kicker">TODAY</p><h2>今日の流れ</h2><table class="flow" id="flow"></table></section>
+<section class="slide" data-title="役割"><p class="kicker">ROLE</p><h2>あなたは税務署の調査官です</h2><div class="grid2"><div class="card red"><span class="badge red">代表 1人</span><ul class="big"><li>代表用QRを読む</li><li>決めた1ページを<b>社長にぶつける</b></li></ul></div><div class="card navy"><span class="badge">メンバー</span><ul class="big"><li>メンバー用QRを読む</li><li>帳票を手分けして読む</li></ul></div></div><p class="note">間違えても減点なし。選考には一切使いません。会社・人物・帳票はすべて架空です。</p></section>
 
-<section class="slide" data-title="あなたの役割"><p class="kicker">ROLE</p><h2>あなたは「税務署の調査官」です</h2><div class="grid2"><div class="card"><h3>やること</h3><ul class="big"><li>社長の<b>3つの主張</b>を崩す証拠を、帳票の中から探し当てる</li><li>主張ごとに、決め手の<b>帳票を1ページ</b>社長にぶつける</li><li>3つそろえば <b>CASE CLEAR</b></li></ul></div><div class="card"><h3>安心してください</h3><ul class="big"><li>間違えても減点はありません。何度でも選び直せます</li><li>正解の数や発言は<b>選考に一切使いません</b></li><li>会社・人物・帳票はすべて<b>架空</b>です</li></ul></div></div></section>
+<section class="slide" data-title="QRを読み取る"><p class="kicker">JOIN</p><h2>QRを読み取ってください</h2><div class="qrs"><div class="qrbox"><span class="badge">メンバー用</span><div class="qr" id="qr-member"></div><div class="url" id="url-member"></div></div><div class="qrbox"><span class="badge red">代表用（1グループ1人）</span><div class="qr" id="qr-leader"></div><div class="url" id="url-leader"></div></div></div></section>
 
-<section class="slide" data-title="グループの役割"><p class="kicker">TEAM</p><h2>グループで役割を分けます</h2><div class="grid2"><div class="card red"><span class="badge red">代表 1人</span><h3 style="margin-top:1vh">証拠を社長に示す人</h3><ul class="big"><li>机のシートの<b>代表用QR</b>を読み取る</li><li>みんなの意見を聞いて、1ページを選んで示す</li><li>主張ごとに交代してもOK</li></ul></div><div class="card navy"><span class="badge">メンバー 全員</span><h3 style="margin-top:1vh">資料を読み込む人</h3><ul class="big"><li>画面の<b>メンバー用QR</b>を読み取る</li><li><b>担当カード</b>の資料から読み始める（担当外も自由に見てOK）</li><li>「◯◯の2ページ目が怪しい」と声に出して伝える</li></ul></div></div></section>
+<section class="slide" data-title="進め方"><p class="kicker">HOW TO</p><h2>主張ごとに、この順で</h2><ol class="steps"><li>代表が<b>社長の主張</b>と<b style="color:var(--red)">赤字の問い</b>を読み上げる</li><li>メンバーは帳票を<b>手分けして</b>読み、「○○の2ページ目に△△とある」と伝える</li><li class="must"><b>相談して、社長にぶつける1ページを決める</b></li><li>代表が示す。崩せなければ、もう一度相談</li></ol></section>
 
-<section class="slide" data-title="QRを読み取る"><p class="kicker">JOIN</p><h2>スマホでQRを読み取ってください</h2><div class="qrs"><div class="qrbox"><span class="badge">メンバー用（全員）</span><div class="qr" id="qr-member"></div><div class="url" id="url-member"></div></div><div class="qrbox small"><span class="badge red">代表用</span><div class="qr" id="qr-leader"></div><div class="url" id="url-leader"></div><p class="hidden-note">読み取ると<br><b data-cfg="caseName"></b><br>が開きます</p></div></div></section>
+<section class="slide" data-title="調査タイム"><p class="kicker">INVESTIGATION</p><h2>調査開始</h2><div class="timer-wrap"><div><div class="timer" id="timer">00:00</div><div class="timer-label" id="timer-label">残り時間</div><div class="timer-buttons"><button class="primary" id="t-start">スタート</button><button id="t-pause">一時停止</button><button id="t-plus">＋1分</button><button id="t-reset">リセット</button></div></div><div class="card"><h3>迷ったら</h3><ul class="big"><li>赤字の問いを読み直す</li><li>日付・金額・取引先を見比べる</li><li>手を挙げてスタッフへ</li></ul></div></div></section>
 
-<section class="slide" data-title="進め方"><p class="kicker">HOW TO</p><h2>1つの主張の進め方</h2><ol class="steps"><li>代表の画面に<b>社長の主張</b>と<b style="color:var(--red)">赤字の問い</b>が出る。代表はそれを<b>声に出して読み上げる</b></li><li>メンバーは自分のスマホで、<b>担当カードの資料から手分けして読む</b>（約2分）。そのあと1人30秒ずつ「<b>○○の2ページ目</b>に、△△と書いてある」と伝える</li><li class="must"><b>グループで相談して、社長にぶつける帳票を1ページに決める</b>（約2分）</li><li>決めた帳票を代表が社長に示す。崩せなかったら、理由を読んでもう一度相談。<b>次の主張では代表を交代</b>してOK</li></ol></section>
+<section class="slide" data-title="ふりかえり"><p class="kicker">REVIEW</p><h2>ふりかえり</h2><ol class="steps"><li>最初に「おかしい」と感じた<b>きっかけ</b>は？</li><li>そこから、<b>どの帳票に当たりをつけた</b>？ なぜ？</li><li>その中から、<b>決め手の1ページ</b>をどう見つけた？</li></ol></section>
 
-<section class="slide" data-title="調査タイム"><p class="kicker">INVESTIGATION</p><h2>調査開始！</h2><div class="timer-wrap"><div><div class="timer" id="timer">00:00</div><div class="timer-label" id="timer-label">残り時間</div><div class="timer-buttons"><button class="primary" id="t-start">スタート</button><button id="t-pause">一時停止</button><button id="t-plus">＋1分</button><button id="t-reset">リセット</button></div></div><div class="card"><h3>困ったら</h3><ul class="big"><li>赤字の問いを、もう一度声に出して読む</li><li>「日付」「金額」「取引先」「サイン」を見比べる</li><li>「この1ページだけで言えることは？」と考える</li><li>手を挙げてスタッフにヒントをもらう</li></ul><p class="hidden-note">目安：主張1つにつき約<span data-cfg="perClaimMin"></span>分</p></div></div></section>
+<section class="slide" data-title="答え合わせ"><p class="kicker">ANSWER</p><h2 id="answer-title">答え合わせ</h2><div class="answers" id="answers"></div></section>
 
-<section class="slide" data-title="ふりかえり"><p class="kicker">REVIEW</p><h2>グループでふりかえり</h2><ol class="steps"><li>最初に「おかしい」と感じた<b>きっかけ（端緒）</b>は、何でしたか？</li><li>そこから、<b>どの帳票を見ればよいと当たりをつけ</b>ましたか？ なぜそう考えましたか？</li><li>その帳票の中から、<b>社長にぶつける1ページ</b>をどうやって見つけましたか？</li></ol><p class="hidden-note" style="margin-top:3vh">「きっかけ → 当たり → 決め手」の順に、1〜2グループに発表してもらいます。<br>※ 端緒（たんしょ）＝調べ始めるきっかけ</p></section>
-
-<section class="slide" data-title="答え合わせ"><p class="kicker">ANSWER</p><h2 id="answer-title">答え合わせ</h2><div class="answers" id="answers"></div><p class="hidden-note" style="margin-top:2vh">※ 前の主張で使った帳票をもう一度示しても、次の主張は進みません。別の記録で裏付けるのがポイントです。</p></section>
-
-<section class="slide" data-title="仕事とのつながり"><p class="kicker">OUR WORK</p><h2 data-cfg="workTitle"></h2><div class="grid3"><div class="card"><span class="badge">1</span><h3 style="margin-top:1vh">端緒をつかむ</h3><p class="big">申告の内容や取引の動きから、「おかしい」という<b>きっかけ</b>を見つける</p></div><div class="card"><span class="badge">2</span><h3 style="margin-top:1vh">当たりをつける</h3><p class="big">その取引が本当なら、<b>どの帳票に記録が残るはずか</b>を考えて絞り込む</p></div><div class="card red"><span class="badge red">3</span><h3 style="margin-top:1vh">帳票で立証する</h3><p class="big">説明と食い違う<b>決め手の帳票</b>を示し、事実を明らかにする</p></div></div><p class="work-note">今日の体験は、この流れを短く体験したものです。</p><p class="work-note" data-cfg="workBody" style="white-space:pre-wrap"></p></section>
-
-<section class="slide title-slide" data-title="おわり"><p class="kicker" data-cfg="org"></p><h1>ありがとうございました</h1><p class="lead" data-cfg="closing" style="white-space:pre-wrap"></p><div id="survey" style="margin-top:3vh;display:none"><div class="qr" id="qr-survey" style="width:min(30vh,24vw);height:min(30vh,24vw);background:#fff;padding:1vh;border-radius:8px"></div><p class="lead">アンケートにご協力ください</p></div></section>
+<section class="slide title-slide" data-title="おわり"><p class="kicker">OUR WORK</p><h1>端緒 → 当たり → 立証</h1><p class="lead">見つけた端緒から、どの帳票を見るべきか当たりをつけ、<br>どの帳票をぶつければ不正を明らかにできるかを見極める。<br>それが、今日体験した仕事です。</p><p class="lead" style="margin-top:4vh">ありがとうございました</p></section>
 
 <nav class="bar" aria-label="スライド操作"><span class="count" id="count"></span><button id="prev" aria-label="前へ">← 前へ</button><button id="next" class="primary" aria-label="次へ">次へ →</button><span class="mini" id="mini" title="調査タイマー"></span><button id="full">全画面</button><button id="settings-open">設定</button></nav>
 </div>
 
-<dialog id="settings"><h2 style="font-size:22px;margin:0 0 12px">説明会の設定</h2><p class="edit-hint">この端末のブラウザーに保存されます。会場の投影PCで一度設定してください。</p>
+<dialog id="settings"><h2 style="font-size:22px;margin:0 0 12px">設定</h2>
 <label>公開URL（index.html と member.html を置いたフォルダー）<input id="c-base" placeholder="https://example.com/trace/"></label>
-<label>体験する事件<select id="c-case"><option value="e1">CASE 01 黒金社長の売上隠し（入門・帳票32ページ）</option><option value="case02">CASE 02 銭守社長の外注費偽装（初級・帳票14ページ）</option><option value="case03">CASE 03 豪田社長のニセ出張（初級・帳票14ページ）</option></select></label>
-<label>会社名・イベント名<input id="c-org"></label>
-<div class="row"><label>開始時刻<input id="c-start" type="time"></label><label>調査タイムの長さ（分）<input id="c-play" type="number" min="5" max="60"></label><label>ふりかえり＋解説（分）<input id="c-review" type="number" min="0" max="30"></label></div>
-<label>「仕事とのつながり」の見出し<input id="c-worktitle"></label>
-<label>「仕事とのつながり」の補足（任意。3つの流れの下に表示）<textarea id="c-workbody" rows="5"></textarea></label>
-<label>最後のひと言<textarea id="c-closing" rows="2"></textarea></label>
-<label>アンケートURL（任意。入れると最後にQRを表示）<input id="c-survey" placeholder="https://forms.example.com/..."></label>
+<label>事件<select id="c-case"><option value="e1">CASE 01 黒金社長の売上隠し（帳票32ページ）</option><option value="case02">CASE 02 銭守社長の外注費偽装（帳票14ページ）</option><option value="case03">CASE 03 豪田社長のニセ出張（帳票14ページ）</option></select></label>
+<label>表題の上に出す名前<input id="c-org"></label>
+<label>調査タイム（分）<input id="c-play" type="number" min="5" max="60"></label>
 <div style="display:flex;gap:8px;justify-content:flex-end"><button id="c-default">初期値に戻す</button><button class="primary" id="c-save">保存して閉じる</button></div></dialog>
 
 <script>
 document.addEventListener('DOMContentLoaded',()=>{'use strict';
-const $=s=>document.querySelector(s),KEY='trace-host-v2';
-const NAMES={e1:'CASE 01 黒金社長の売上隠し',case02:'CASE 02 銭守社長の外注費偽装',case03:'CASE 03 豪田社長のニセ出張'};
+const $=s=>document.querySelector(s),KEY='trace-host-v3';
 const here=/^https?:$/.test(location.protocol)?location.href.replace(/[^/]*([?#].*)?$/,''):'';
-const DEFAULTS={base:here,case:'e1',org:'説明会',start:'',play:22,review:8,workTitle:'実際の仕事とのつながり',workBody:'',closing:'見つけた端緒から、どの帳票を見るべきか当たりをつけ、\nどの帳票をぶつければ不正を明らかにできるかを見極める。\nそれが、今日体験した仕事です。',survey:''};
+const DEFAULTS={base:here,case:'e1',org:'説明会',play:22};
 let cfg={...DEFAULTS};try{cfg={...DEFAULTS,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){}
 if(!cfg.base)cfg.base=here;
 const slides=[...document.querySelectorAll('.slide')];let at=0;
 try{at=Math.min(slides.length-1,Math.max(0,Number(sessionStorage.getItem(KEY+':at'))||0))}catch(e){}
 const LINKS=window.TRACE_LINKS||null;
 function base(){if(LINKS)return 'fixed';let b=(cfg.base||'').trim();if(b&&!b.endsWith('/'))b+='/';return b}
-function links(){if(LINKS)return {leader:LINKS.leader+'#'+cfg.case,member:LINKS.member+'#'+cfg.case};const b=base();return {leader:b?b+'index.html#'+cfg.case:'',member:b?b+'member.html?case='+encodeURIComponent(cfg.case):''}}
+function links(){if(LINKS)return {leader:LINKS.leader+'#'+cfg.case,member:LINKS.member+'#'+cfg.case};const b=base();return {leader:b?b+'index.html#'+cfg.case:'',member:b?b+'member.html#'+cfg.case:''}}
 function qr(el,text){el.innerHTML='';if(!text){el.innerHTML='<p style="font-size:16px;color:#b3261e;padding:1em">「設定」で公開URLを入れてください</p>';return}const ST=window.TRACE_STATIC?.qr?.[text];if(ST){const n=ST.n,bits=ST.b.replace(/./g,h=>parseInt(h,16).toString(2).padStart(4,'0'));let d='';for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(bits[y*n+x]==='1')d+=`M${x+2} ${y+2}h1v1h-1z`;el.innerHTML=`<svg viewBox="0 0 ${n+4} ${n+4}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path fill="#000" d="${d}"/></svg>`;return}if(typeof qrcode!=='function'){el.textContent=text;return}const q=qrcode(0,'M');q.addData(text);q.make();el.innerHTML=q.createSvgTag({cellSize:4,margin:2,scalable:true})}
-function hm(t,add){if(!t)return '';const [h,m]=t.split(':').map(Number);const d=h*60+m+add;return String(Math.floor(d/60)%24).padStart(2,'0')+':'+String(d%60).padStart(2,'0')}
-function flow(){const rows=[['オープニング・ルール説明',5],['QR読み取り・代表決め',4],['プロローグ（代表の画面を全員で読む）',3],['調査タイム（主張1〜3）',Number(cfg.play)||22],['ふりかえり・答え合わせ',Number(cfg.review)||8],['仕事とのつながり',3]];let t=0;$('#flow').innerHTML=rows.map(([name,min])=>{const s=cfg.start?hm(cfg.start,t):`${t}分〜`;t+=min;return `<tr><td>${s}</td><td>${name}（${min}分）</td></tr>`}).join('')}
 function answers(){const G=window.TraceStory;const box=$('#answers');const SA=window.TRACE_STATIC?.answers?.[cfg.case];if(SA){$('#answer-title').textContent='答え合わせ：'+SA.title;box.innerHTML=SA.html;return}if(!G){box.innerHTML='<p>データを読み込めませんでした。</p>';return}const e=G.episodes.find(x=>x.id===cfg.case)||G.episodes[0];$('#answer-title').textContent='答え合わせ：'+e.title;
 box.innerHTML=e.acts.map((a,i)=>{const docs=a.correct.map(k=>{const id=e.keyPages[k],p=G.page(id),d=G.doc(p.docId);return `${d.title} ${d.pages.findIndex(q=>q.id===id)+1}ページ目`});return `<div class="card"><span class="badge">主張 ${i+1}</span><p class="claim">「${e.claims[i]}」</p><p class="doc">決め手：${docs.join(' / ')}</p><p>${a.finding}</p></div>`}).join('')}
-function apply(){document.querySelectorAll('[data-cfg]').forEach(el=>{const k=el.dataset.cfg;el.textContent=k==='playMin'?(Number(cfg.play)||22):k==='perClaimMin'?Math.max(1,Math.round((Number(cfg.play)||22)/3)):k==='caseName'?NAMES[cfg.case]:(cfg[k]||'')});
-const {leader,member}=links();qr($('#qr-member'),member);qr($('#qr-leader'),leader);$('#url-member').textContent=member;$('#url-leader').textContent=leader;
-if(cfg.survey){$('#survey').style.display='block';qr($('#qr-survey'),cfg.survey)}else $('#survey').style.display='none';flow();answers();resetTimer()}
+function apply(){document.querySelectorAll('[data-cfg]').forEach(el=>{el.textContent=cfg[el.dataset.cfg]||''});
+const {leader,member}=links();qr($('#qr-member'),member);qr($('#qr-leader'),leader);$('#url-member').textContent=member;$('#url-leader').textContent=leader;answers();resetTimer()}
 function show(n){at=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('on',i===at));$('#count').textContent=`${at+1} / ${slides.length}　${slides[at].dataset.title}`;try{sessionStorage.setItem(KEY+':at',at)}catch(e){}}
-// timer
 let remain=0,end=0,running=false,tick=null;
 function fmt(s){s=Math.max(0,Math.ceil(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
-function paint(){const s=running?(end-Date.now())/1000:remain;$('#timer').textContent=fmt(s);$('#timer').classList.toggle('warn',s<=60);$('#mini').textContent=running||remain<(Number(cfg.play)||22)*60?'⏱ '+fmt(s):'';$('#timer-label').textContent=s<=0?'時間です！ 代表は最後の1ページを示しましょう':'残り時間';if(running&&s<=0){running=false;remain=0;clearInterval(tick)}}
+function paint(){const s=running?(end-Date.now())/1000:remain;$('#timer').textContent=fmt(s);$('#timer').classList.toggle('warn',s<=60);$('#mini').textContent=running||remain<(Number(cfg.play)||22)*60?'⏱ '+fmt(s):'';$('#timer-label').textContent=s<=0?'時間です':'残り時間';if(running&&s<=0){running=false;remain=0;clearInterval(tick)}}
 function resetTimer(){running=false;clearInterval(tick);remain=(Number(cfg.play)||22)*60;paint()}
 $('#t-start').onclick=()=>{if(running)return;end=Date.now()+remain*1000;running=true;clearInterval(tick);tick=setInterval(paint,250);paint()};
 $('#t-pause').onclick=()=>{if(!running)return;remain=(end-Date.now())/1000;running=false;clearInterval(tick);paint()};
@@ -128,7 +109,7 @@ $('#t-reset').onclick=resetTimer;
 $('#prev').onclick=()=>show(at-1);$('#next').onclick=()=>show(at+1);
 $('#full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.()};
 document.addEventListener('keydown',e=>{if($('#settings').open||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(at+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(at-1)}else if(e.key==='f')$('#full').click()});
-const fields={base:'#c-base',case:'#c-case',org:'#c-org',start:'#c-start',play:'#c-play',review:'#c-review',workTitle:'#c-worktitle',workBody:'#c-workbody',closing:'#c-closing',survey:'#c-survey'};
+const fields={base:'#c-base',case:'#c-case',org:'#c-org',play:'#c-play'};
 function fill(c){for(const [k,s] of Object.entries(fields))$(s).value=c[k]??''}
 $('#settings-open').onclick=()=>{fill(cfg);$('#c-base').closest('label').hidden=!!LINKS;$('#settings').showModal()};
 $('#c-default').onclick=()=>fill({...DEFAULTS,base:cfg.base});
