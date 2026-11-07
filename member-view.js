@@ -67,10 +67,11 @@
   let episode=episodes.find(e=>e.id===wanted)||episodes.find(e=>e.id===store.active)||null;
   let view=cleanView(store.views?.[episode?.id],episode),deskScroll=0;
   const portrait=Characters?.president?(x,id)=>Characters.president(x,id):null;
+  function syncUrl(){try{const loc=win.location;if(!loc||!win.history?.replaceState)return;const q=new URLSearchParams(loc.search||'');q.delete('case');const qs=q.toString();const url=loc.pathname+(qs?'?'+qs:'')+(episode?'#'+episode.id:'');if(url!==loc.pathname+(loc.search||'')+(loc.hash||''))win.history.replaceState(win.history.state,'',url)}catch(e){}}
   function persist(){try{store.active=episode?.id||null;store.views=store.views||{};if(episode)store.views[episode.id]=view;win.localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
   function draw(scroll){
    main.innerHTML=render({episodes,episode,view,Inspection,portrait});
-   bind();Fit?.refresh?.();persist();
+   bind();Fit?.refresh?.();persist();syncUrl();
    if(scroll==='top')win.scrollTo?.({top:0,behavior:'auto'});
    else if(scroll==='reader'){const r=main.querySelector('.member-workspace');if(r)win.scrollTo?.({top:Math.max(0,(r.getBoundingClientRect?.().top||0)+(win.scrollY||0)-8),behavior:'auto'})}
    else if(typeof scroll==='number')win.scrollTo?.({top:scroll,behavior:'auto'});

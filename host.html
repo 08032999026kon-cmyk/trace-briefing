@@ -70,7 +70,7 @@ dialog .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 
 <section class="slide title-slide" data-title="おわり"><p class="kicker">OUR WORK</p><h1>端緒 → 当たり → 立証</h1><p class="lead">見つけた端緒から、どの帳票を見るべきか当たりをつけ、<br>どの帳票をぶつければ不正を明らかにできるかを見極める。<br>それが、今日体験した仕事です。</p><p class="lead" style="margin-top:4vh">ありがとうございました</p></section>
 
-<nav class="bar" aria-label="スライド操作"><span class="count" id="count"></span><button id="prev" aria-label="前へ">← 前へ</button><button id="next" class="primary" aria-label="次へ">次へ →</button><span class="mini" id="mini" title="調査タイマー"></span><button id="full">全画面</button><button id="settings-open">設定</button></nav>
+<nav class="bar" aria-label="スライド操作"><span class="count" id="count"></span><button id="first">最初へ</button><button id="resume" hidden></button><button id="prev" aria-label="前へ">← 前へ</button><button id="next" class="primary" aria-label="次へ">次へ →</button><span class="mini" id="mini" title="調査タイマー"></span><button id="full">全画面</button><button id="settings-open">設定</button></nav>
 </div>
 
 <dialog id="settings"><h2 style="font-size:22px;margin:0 0 12px">設定</h2>
@@ -88,7 +88,7 @@ const DEFAULTS={base:here,case:'e1',org:'説明会',play:22};
 let cfg={...DEFAULTS};try{cfg={...DEFAULTS,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){}
 if(!cfg.base)cfg.base=here;
 const slides=[...document.querySelectorAll('.slide')];let at=0;
-try{at=Math.min(slides.length-1,Math.max(0,Number(sessionStorage.getItem(KEY+':at'))||0))}catch(e){}
+let resumeAt=0;try{resumeAt=Math.min(slides.length-1,Math.max(0,Number(sessionStorage.getItem(KEY+':at'))||0))}catch(e){}
 const LINKS=window.TRACE_LINKS||null;
 function base(){if(LINKS)return 'fixed';let b=(cfg.base||'').trim();if(b&&!b.endsWith('/'))b+='/';return b}
 function links(){if(LINKS)return {leader:LINKS.leader+'#'+cfg.case,member:LINKS.member+'#'+cfg.case};const b=base();return {leader:b?b+'index.html#'+cfg.case:'',member:b?b+'member.html#'+cfg.case:''}}
@@ -97,7 +97,7 @@ function answers(){const G=window.TraceStory;const box=$('#answers');const SA=wi
 box.innerHTML=e.acts.map((a,i)=>{const docs=a.correct.map(k=>{const id=e.keyPages[k],p=G.page(id),d=G.doc(p.docId);return `${d.title} ${d.pages.findIndex(q=>q.id===id)+1}ページ目`});return `<div class="card"><span class="badge">主張 ${i+1}</span><p class="claim">「${e.claims[i]}」</p><p class="doc">決め手：${docs.join(' / ')}</p><p>${a.finding}</p></div>`}).join('')}
 function apply(){document.querySelectorAll('[data-cfg]').forEach(el=>{el.textContent=cfg[el.dataset.cfg]||''});
 const {leader,member}=links();qr($('#qr-member'),member);qr($('#qr-leader'),leader);$('#url-member').textContent=member;$('#url-leader').textContent=leader;answers();resetTimer()}
-function show(n){at=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('on',i===at));$('#count').textContent=`${at+1} / ${slides.length}　${slides[at].dataset.title}`;try{sessionStorage.setItem(KEY+':at',at)}catch(e){}}
+function show(n,keep){at=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('on',i===at));$('#count').textContent=`${at+1} / ${slides.length}　${slides[at].dataset.title}`;if(!keep)try{sessionStorage.setItem(KEY+':at',at)}catch(e){}if(at)$('#resume').hidden=true}
 let remain=0,end=0,running=false,tick=null;
 function fmt(s){s=Math.max(0,Math.ceil(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 function paint(){const s=running?(end-Date.now())/1000:remain;$('#timer').textContent=fmt(s);$('#timer').classList.toggle('warn',s<=60);$('#mini').textContent=running||remain<(Number(cfg.play)||22)*60?'⏱ '+fmt(s):'';$('#timer-label').textContent=s<=0?'時間です':'残り時間';if(running&&s<=0){running=false;remain=0;clearInterval(tick)}}
@@ -106,14 +106,14 @@ $('#t-start').onclick=()=>{if(running)return;end=Date.now()+remain*1000;running=
 $('#t-pause').onclick=()=>{if(!running)return;remain=(end-Date.now())/1000;running=false;clearInterval(tick);paint()};
 $('#t-plus').onclick=()=>{if(running)end+=60000;else remain+=60;paint()};
 $('#t-reset').onclick=resetTimer;
-$('#prev').onclick=()=>show(at-1);$('#next').onclick=()=>show(at+1);
+$('#first').onclick=()=>show(0);$('#resume').onclick=()=>show(resumeAt);$('#prev').onclick=()=>show(at-1);$('#next').onclick=()=>show(at+1);
 $('#full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.()};
-document.addEventListener('keydown',e=>{if($('#settings').open||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(at+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(at-1)}else if(e.key==='f')$('#full').click()});
+document.addEventListener('keydown',e=>{if($('#settings').open||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if((e.key===' '||e.key==='Enter')&&e.target.closest?.('button,a'))return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(at+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(at-1)}else if(e.key==='Home'){e.preventDefault();show(0)}else if(e.key==='f')$('#full').click()});
 const fields={base:'#c-base',case:'#c-case',org:'#c-org',play:'#c-play'};
 function fill(c){for(const [k,s] of Object.entries(fields))$(s).value=c[k]??''}
 $('#settings-open').onclick=()=>{fill(cfg);$('#c-base').closest('label').hidden=!!LINKS;$('#settings').showModal()};
 $('#c-default').onclick=()=>fill({...DEFAULTS,base:cfg.base});
 $('#c-save').onclick=()=>{for(const [k,s] of Object.entries(fields))cfg[k]=$(s).value;try{localStorage.setItem(KEY,JSON.stringify(cfg))}catch(e){}$('#settings').close();apply()};
-apply();show(at);if(!base())$('#settings-open').click();
+apply();show(0,true);if(resumeAt>0){$('#resume').textContent=`続きから（${resumeAt+1}枚目）`;$('#resume').hidden=false}if(!base())$('#settings-open').click();
 });
 </script></body></html>
