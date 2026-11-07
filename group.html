@@ -28,7 +28,7 @@ const here=/^https?:$/.test(location.protocol)?location.href.replace(/[^/]*([?#]
 function qr(el,text){el.innerHTML='';if(typeof qrcode!=='function'){el.textContent='QRを作れませんでした';return}const q=qrcode(0,'M');q.addData(text);q.make();el.innerHTML=q.createSvgTag({cellSize:4,margin:2,scalable:true})}
 function draw(){let base=$('#base').value.trim();if(base&&!base.endsWith('/'))base+='/';const c=$('#case').value,g=$('#group').value.trim();
 $('#warn').textContent=window.TRACE_LINKS?'':!base?'公開URLを入力してください。参加者のスマホから開けるhttps://のURLが必要です。':(!/^https:\/\//.test(base)?'https:// で始まるURLをおすすめします。スマホから開けるか事前に確認してください。':'');
-const L=window.TRACE_LINKS,leader=L?L.leader:base+'index.html',member=L?L.member+'#'+c:base+'member.html?case='+encodeURIComponent(c);$('#g1').textContent=g||'代表';$('#g2').textContent=g||'メンバー';$('#leader-case').textContent='開いたら「'+names[c]+'」を選んで始めます。';
+const L=window.TRACE_LINKS,leader=(L?L.leader:base+'index.html')+'#'+c,member=L?L.member+'#'+c:base+'member.html?case='+encodeURIComponent(c);$('#g1').textContent=g||'代表';$('#g2').textContent=g||'メンバー';$('#leader-case').textContent='読み取ると「'+names[c]+'」が開きます。';
 $('#url-leader').textContent=leader;$('#url-member').textContent=member;qr($('#qr-leader'),leader);qr($('#qr-member'),member)}
 ['base','case','group'].forEach(id=>$('#'+id).addEventListener('input',draw));$('#print').onclick=()=>window.print();draw()});
 </script></body></html>

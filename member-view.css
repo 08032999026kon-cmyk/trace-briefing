@@ -38,3 +38,15 @@
 .member-case strong{font-size:17px}
 .member-case small{font-size:12px;color:#5d604f}
 @media(min-width:900px){.member-brief dl{grid-template-columns:1fr 1fr}}
+/* v24.2 わかりやすさ改善：使い方の3手順、主張の一覧表示、担当の札 */
+.member-howto{margin:8px 0 4px;padding-left:1.4em;font-size:13px;line-height:1.7}.member-howto li{margin:2px 0}
+.member-claim-head{display:flex;gap:10px;align-items:center;margin-bottom:8px}.member-claim-head .member-claim-face{width:56px}
+.member-claim-head strong{display:block;font-size:16px}.member-claim-head p{margin:2px 0 0;font-size:12px;color:#5d604f;line-height:1.6}
+.member-red{color:#a3241c;font-weight:700}
+.member-claim-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.member-claim-list li{display:flex;gap:8px;align-items:flex-start;border-top:1px solid #ece6d6;padding-top:8px}
+.member-claim-no{flex-shrink:0;font-size:11px;font-weight:700;color:#fff;background:#172638;border-radius:999px;padding:1px 8px;margin-top:3px}
+.member-claim-list strong{display:block;font-size:15px;line-height:1.5}
+.member-claim-list .member-question{margin:2px 0 0;font-size:13px;line-height:1.6}
+.member-workspace .desk-pile{position:relative}
+.member-role-tag{position:absolute;top:6px;right:6px;z-index:3;font-size:11px;font-weight:700;color:#fff;background:#172638;border-radius:4px;padding:1px 7px;pointer-events:none}

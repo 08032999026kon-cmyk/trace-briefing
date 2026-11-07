@@ -26,7 +26,7 @@
  }
 
  function roleBanner(episode,number){
-  return `<section class="member-role" aria-label="この画面の役割"><div><span class="member-role-badge">メンバー用</span><strong>資料を見る専用の画面です</strong></div><p>帳票は自由にめくれます。<b>社長に証拠を示すのは代表のスマホだけ</b>です。気になるページを見つけたら、ページ番号をグループに伝えて相談しましょう。</p><div class="member-case-line"><span>CASE ${esc(number)}／${esc(episode.title)}</span><button class="text-button" data-member-cases>事件を選び直す</button></div></section>`;
+  return `<section class="member-role" aria-label="この画面の役割"><div><span class="member-role-badge">メンバー用</span><strong>帳票を読む専用の画面です</strong></div><ol class="member-howto"><li><b>担当カード</b>の札が付いた束から読み始める（他の束も自由に見てOK）</li><li>決め手になりそうなページは「<b>資料名の○ページ目</b>に、△△と書いてある」とグループに伝える</li><li>グループで1ページに決めたら、<b>代表のスマホ</b>から社長にぶつける</li></ol><div class="member-case-line"><span>CASE ${esc(number)}／${esc(episode.title)}</span><button class="text-button" data-member-cases>事件を選び直す</button></div></section>`;
  }
 
  function briefing(episode){
@@ -34,11 +34,11 @@
   return `<details class="member-brief"><summary>調査の状況（役割・対象の取引）</summary><dl><div><dt>あなたの役割</dt><dd>${esc(b.role)}（${esc(b.location)}）</dd></div><div><dt>調べている取引</dt><dd>${esc(b.target)}</dd></div><div><dt>調査のきっかけ</dt><dd>${esc(b.clue)}</dd></div><div><dt>心がけ</dt><dd>${esc(b.stance)}</dd></div></dl></details>`;
  }
 
+ // 主張は3つとも並べて見せる。代表の進行と同期しないため、メンバーに番号を合わせる操作をさせない。
  function claimPanel(episode,act,portrait){
-  const claims=episode.claims||[],q=QUESTIONS[episode.id]?.[act]||episode.acts?.[act]?.goal||'';
-  const expression=episode.acts?.[act]?.expression||'smug';
-  let face='';try{face=portrait?portrait(expression,episode.id):''}catch(e){face=''}
-  return `<section class="member-claim" aria-label="社長の主張と、いま確かめること"><div class="member-claim-tabs" role="group" aria-label="主張の番号">${claims.map((_,i)=>`<button class="member-claim-tab${i===act?' is-current':''}" data-member-act="${i}" aria-pressed="${i===act}">主張 ${i+1}</button>`).join('')}</div><p class="member-claim-note">代表の画面と同じ番号に合わせてください。</p><div class="member-claim-body">${face?`<div class="member-claim-face" aria-hidden="true">${face}</div>`:''}<div><span>${esc(episode.president)}社長の主張 ${act+1}/${claims.length}</span><strong>「${esc(claims[act])}」</strong><p class="member-question">${esc(q)}</p></div></div></section>`;
+  const claims=episode.claims||[];
+  let face='';try{face=portrait?portrait('smug',episode.id):''}catch(e){face=''}
+  return `<section class="member-claim" aria-label="社長の主張と、確かめること"><div class="member-claim-head">${face?`<div class="member-claim-face" aria-hidden="true">${face}</div>`:''}<div><strong>${esc(episode.president)}社長の3つの主張</strong><p>代表が読み上げた主張について、<span class="member-red">赤字の問い</span>を手がかりに帳票を探します。</p></div></div><ol class="member-claim-list">${claims.map((c,i)=>`<li><span class="member-claim-no">主張${i+1}</span><div><strong>「${esc(c)}」</strong><p class="member-question">${esc(QUESTIONS[episode.id]?.[i]||episode.acts?.[i]?.goal||'')}</p></div></li>`).join('')}</ol></section>`;
  }
 
  function workspace(episode,view,Inspection,number){
@@ -58,7 +58,7 @@
   return roleBanner(episode,number)+briefing(episode)+claimPanel(episode,view.act,portrait)+`<section class="member-workspace" aria-label="帳票">${workspace(episode,view,Inspection,number)}</section>`;
  }
 
- function mount({doc=globalThis.document,win=globalThis.window,Story=globalThis.TraceStory,Inspection=globalThis.TraceDeskInspection,Characters=globalThis.TraceCharacters,Fit=globalThis.PaperFit}={}){
+ function mount({doc=globalThis.document,win=globalThis.window,Story=globalThis.TraceStory,Inspection=globalThis.TraceDeskInspection,Characters=globalThis.TraceCharacters,Fit=globalThis.PaperFit,Roles=globalThis.TraceRoles}={}){
   const main=doc.querySelector('#member-main');if(!main||!Story)return null;
   const episodes=Story.episodes;
   let store={};try{store=JSON.parse(win.localStorage.getItem(KEY)||'{}')||{}}catch(e){store={}}
@@ -70,10 +70,15 @@
   function persist(){try{store.active=episode?.id||null;store.views=store.views||{};if(episode)store.views[episode.id]=view;win.localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
   function draw(scroll){
    main.innerHTML=render({episodes,episode,view,Inspection,portrait});
-   bind();Fit?.refresh?.();persist();
+   bind();tagRoles();Fit?.refresh?.();persist();
    if(scroll==='top')win.scrollTo?.({top:0,behavior:'auto'});
    else if(scroll==='reader'){const r=main.querySelector('.member-workspace');if(r)win.scrollTo?.({top:Math.max(0,(r.getBoundingClientRect?.().top||0)+(win.scrollY||0)-8),behavior:'auto'})}
    else if(typeof scroll==='number')win.scrollTo?.({top:scroll,behavior:'auto'});
+  }
+  // 机の束に担当カードと同じ「○○担当」の札を付ける（表示だけ。閲覧は制限しない）。
+  function tagRoles(){
+   if(!episode||!Roles?.roleOf)return;
+   main.querySelectorAll('[data-doc]').forEach(b=>{const d=episode.docs.find(x=>x.id===b.dataset.doc),r=d&&Roles.roleOf(episode.id,d.title);if(!r||b.querySelector('.member-role-tag'))return;const t=doc.createElement('span');t.className='member-role-tag';t.textContent=r.name;b.appendChild(t)});
   }
   function openDoc(id){deskScroll=win.scrollY||0;view={...view,docId:id,index:0,zoom:false};draw('reader')}
   function setPage(n){const d=episode.docs.find(x=>x.id===view.docId);if(!d||n<0||n>=d.pages.length)return;const y=win.scrollY||0;view={...view,index:n};draw(y)}

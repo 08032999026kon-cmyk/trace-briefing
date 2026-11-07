@@ -58,7 +58,7 @@ dialog .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 <script defer src="forms.js"></script><script defer src="page-data.js"></script><script defer src="episodes-data.js"></script><script defer src="story.js"></script><script defer src="vendor/qrcode.js"></script>
 </head><body>
 <div class="deck">
-<section class="slide title-slide" data-title="タイトル"><div class="logo">T</div><p class="kicker" data-cfg="org"></p><h1>税務調査体験<br>TRACE</h1><p class="lead">山のような帳票の中から、<b>不正を立証する決め手の書類</b>を探し当て、<b style="color:var(--red)">社長にぶつける</b>。<br>グループで相談しながら進める体験です（調査タイム約<span data-cfg="playMin"></span>分）。</p></section>
+<section class="slide title-slide" data-title="タイトル"><div class="logo">T</div><p class="kicker" data-cfg="org"></p><h1>税務調査体験<br>TRACE</h1><p class="lead">社長の説明の<b>おかしな点</b>を手がかりに、どの帳票を見るべきか当たりをつけ、<b>不正を立証する決め手の1ページ</b>を<b style="color:var(--red)">社長にぶつける</b>。<br>グループで相談しながら進める体験です（調査タイム約<span data-cfg="playMin"></span>分）。</p></section>
 
 <section class="slide" data-title="今日の流れ"><p class="kicker">TODAY</p><h2>今日の流れ</h2><table class="flow" id="flow"></table></section>
 
@@ -66,7 +66,7 @@ dialog .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 
 <section class="slide" data-title="グループの役割"><p class="kicker">TEAM</p><h2>グループで役割を分けます</h2><div class="grid2"><div class="card red"><span class="badge red">代表 1人</span><h3 style="margin-top:1vh">証拠を社長に示す人</h3><ul class="big"><li>机のシートの<b>代表用QR</b>を読み取る</li><li>みんなの意見を聞いて、1ページを選んで示す</li><li>主張ごとに交代してもOK</li></ul></div><div class="card navy"><span class="badge">メンバー 全員</span><h3 style="margin-top:1vh">資料を読み込む人</h3><ul class="big"><li>画面の<b>メンバー用QR</b>を読み取る</li><li><b>担当カード</b>の資料から読み始める（担当外も自由に見てOK）</li><li>「◯◯の2ページ目が怪しい」と声に出して伝える</li></ul></div></div></section>
 
-<section class="slide" data-title="QRを読み取る"><p class="kicker">JOIN</p><h2>スマホでQRを読み取ってください</h2><div class="qrs"><div class="qrbox"><span class="badge">メンバー用（全員）</span><div class="qr" id="qr-member"></div><div class="url" id="url-member"></div></div><div class="qrbox small"><span class="badge red">代表用</span><div class="qr" id="qr-leader"></div><div class="url" id="url-leader"></div><p class="hidden-note">代表は事件一覧で<br><b data-cfg="caseName"></b><br>を選んで始めます</p></div></div></section>
+<section class="slide" data-title="QRを読み取る"><p class="kicker">JOIN</p><h2>スマホでQRを読み取ってください</h2><div class="qrs"><div class="qrbox"><span class="badge">メンバー用（全員）</span><div class="qr" id="qr-member"></div><div class="url" id="url-member"></div></div><div class="qrbox small"><span class="badge red">代表用</span><div class="qr" id="qr-leader"></div><div class="url" id="url-leader"></div><p class="hidden-note">読み取ると<br><b data-cfg="caseName"></b><br>が開きます</p></div></div></section>
 
 <section class="slide" data-title="進め方"><p class="kicker">HOW TO</p><h2>1つの主張の進め方</h2><ol class="steps"><li>代表の画面に<b>社長の主張</b>と<b style="color:var(--red)">赤字の問い</b>が出る。代表はそれを<b>声に出して読み上げる</b></li><li>メンバーは自分のスマホで、<b>担当カードの資料から手分けして読む</b>（約2分）。そのあと1人30秒ずつ「<b>○○の2ページ目</b>に、△△と書いてある」と伝える</li><li class="must"><b>グループで相談して、社長にぶつける帳票を1ページに決める</b>（約2分）</li><li>決めた帳票を代表が社長に示す。崩せなかったら、理由を読んでもう一度相談。<b>次の主張では代表を交代</b>してOK</li></ol></section>
 
@@ -106,7 +106,7 @@ const slides=[...document.querySelectorAll('.slide')];let at=0;
 try{at=Math.min(slides.length-1,Math.max(0,Number(sessionStorage.getItem(KEY+':at'))||0))}catch(e){}
 const LINKS=window.TRACE_LINKS||null;
 function base(){if(LINKS)return 'fixed';let b=(cfg.base||'').trim();if(b&&!b.endsWith('/'))b+='/';return b}
-function links(){if(LINKS)return {leader:LINKS.leader,member:LINKS.member+'#'+cfg.case};const b=base();return {leader:b?b+'index.html':'',member:b?b+'member.html?case='+encodeURIComponent(cfg.case):''}}
+function links(){if(LINKS)return {leader:LINKS.leader+'#'+cfg.case,member:LINKS.member+'#'+cfg.case};const b=base();return {leader:b?b+'index.html#'+cfg.case:'',member:b?b+'member.html?case='+encodeURIComponent(cfg.case):''}}
 function qr(el,text){el.innerHTML='';if(!text){el.innerHTML='<p style="font-size:16px;color:#b3261e;padding:1em">「設定」で公開URLを入れてください</p>';return}const ST=window.TRACE_STATIC?.qr?.[text];if(ST){const n=ST.n,bits=ST.b.replace(/./g,h=>parseInt(h,16).toString(2).padStart(4,'0'));let d='';for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(bits[y*n+x]==='1')d+=`M${x+2} ${y+2}h1v1h-1z`;el.innerHTML=`<svg viewBox="0 0 ${n+4} ${n+4}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path fill="#000" d="${d}"/></svg>`;return}if(typeof qrcode!=='function'){el.textContent=text;return}const q=qrcode(0,'M');q.addData(text);q.make();el.innerHTML=q.createSvgTag({cellSize:4,margin:2,scalable:true})}
 function hm(t,add){if(!t)return '';const [h,m]=t.split(':').map(Number);const d=h*60+m+add;return String(Math.floor(d/60)%24).padStart(2,'0')+':'+String(d%60).padStart(2,'0')}
 function flow(){const rows=[['オープニング・ルール説明',5],['QR読み取り・代表決め',4],['プロローグ（代表の画面を全員で読む）',3],['調査タイム（主張1〜3）',Number(cfg.play)||22],['ふりかえり・答え合わせ',Number(cfg.review)||8],['仕事とのつながり',3]];let t=0;$('#flow').innerHTML=rows.map(([name,min])=>{const s=cfg.start?hm(cfg.start,t):`${t}分〜`;t+=min;return `<tr><td>${s}</td><td>${name}（${min}分）</td></tr>`}).join('')}
